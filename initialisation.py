@@ -47,10 +47,8 @@ idle_SOUTH_WEST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir1.png").c
 idle_WEST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir2.png").convert_alpha()
 
 
-
-
-
-
+cloud_bg = pygame.image.load("assets/cloud_bg.jpg").convert()
+cloud_bg = pygame.transform.scale(cloud_bg, (WIDTH,HEIGHT))
 
 
 

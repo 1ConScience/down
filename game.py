@@ -49,7 +49,7 @@ def start():
                 bot.move()
             bot.update()
 
-        screen.fill((0,0,0))
+        screen.blit(cloud_bg,(0,0))
 
         display_elements()
 
