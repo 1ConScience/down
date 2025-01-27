@@ -1,10 +1,8 @@
 from classiq import *
 
-def display_elements(room,player,list_bot):
-    #room
-    room.display()
+def display_elements(first_cube,player,list_bot):
+    first_cube.display()
 
-    #player
     player.display()
 
     for bot in list_bot:
@@ -15,12 +13,12 @@ def start():
 
     player = Player()
 
-    room = Room("garden")
-    addCollideGroup(room)
+    first_cube = Cube("0060")
+    addCollideGroup(first_cube)
 
     list_bot = []
     for i in range(4):
-        bot = Bot(room)
+        bot = Bot()
         list_bot.append(bot)
 
     frame_count = 0
@@ -36,12 +34,12 @@ def start():
 
         for bot in list_bot:
             if frame_count%10==0:
-                bot.move(room)
+                bot.move()
             bot.update()
 
         screen.fill((0,0,0))
 
-        display_elements(room,player,list_bot)
+        display_elements(first_cube,player,list_bot)
 
         pygame.display.update()
         FramePerSec.tick(FPS)

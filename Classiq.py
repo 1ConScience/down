@@ -8,7 +8,7 @@ class Character(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(character_mask)
         self.rect = self.surf.get_rect()
    
-        self.pos = vec((WIDTH/2+100,HEIGHT/2+100))
+        self.pos = vec((WIDTH/2,HEIGHT/2))
         self.vel = vec(0,0)
         self.last_direction = ""
 
@@ -138,13 +138,12 @@ class Player(Character):
         self.controlsJoystick()
 
 class Bot(Character):
-    def __init__(self,room):
+    def __init__(self):
         super().__init__()  
  
-        self.pos.x = random.randint(room.rect.x+295,room.rect.x+1183)
-        self.pos.y = random.randint(room.rect.y+460,room.rect.y+805)
+        self.pos = vec((WIDTH/2,HEIGHT/2))
 
-    def move(self,room):
+    def move(self):
         magic_number = random.randint(1,9)
         if magic_number == 1:
             self.vel.x = 1
@@ -174,15 +173,15 @@ class Bot(Character):
             self.vel.x = 0
             self.vel.y = 0
 
-class Room(pygame.sprite.Sprite):
-    def __init__(self, room_name_):
+class Cube(pygame.sprite.Sprite):
+    def __init__(self, identifiant):
         super().__init__()  
 
-        self.name = room_name_
+        self.identifiant = identifiant
 
-        self.surf = pygame.image.load("assets/"+room_name_+".png").convert_alpha()
+        self.surf = pygame.image.load("assets/assets_1024x1024/isometric_"+identifiant+".png").convert_alpha()
 
-        tmp_room_mask = pygame.image.load("assets/"+room_name_+"_mask.png").convert_alpha()
+        tmp_room_mask = pygame.image.load("assets/isometric_mask.png").convert_alpha()
         self.mask = pygame.mask.from_surface(tmp_room_mask)
 
         self.rect = self.surf.get_rect(center = (WIDTH/2, HEIGHT/2))
