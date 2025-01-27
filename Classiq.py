@@ -16,7 +16,7 @@ class Character(pygame.sprite.Sprite):
         self.offset_y_frame_idle = 0
         self.offset_x_frame_idle = 0
 
-        self.pos = vec((WIDTH/2,HEIGHT/2+cube_y_offset))
+        self.pos = vec((WIDTH/2,HEIGHT/2+200))
         self.vel = vec(0,0)
         self.last_direction = "walk_EAST_Sheet"
 
@@ -220,10 +220,10 @@ class Cube(pygame.sprite.Sprite):
         self.identifiant = identifiant
 
         self.surf = pygame.image.load("assets/assets_1024x1024/isometric_"+identifiant+".png").convert_alpha()
-        self.surf = pygame.transform.scale(self.surf, (256,256))
+        self.surf = pygame.transform.scale(self.surf, (128,128))
 
         tmp_room_mask = pygame.image.load("assets/isometric_mask.png").convert_alpha()
-        tmp_room_mask = pygame.transform.scale(tmp_room_mask, (256,256))
+        tmp_room_mask = pygame.transform.scale(tmp_room_mask, (128,128))
         self.mask = pygame.mask.from_surface(tmp_room_mask)
 
         self.rect = self.surf.get_rect(center = (WIDTH/2+x_offset, HEIGHT/2+y_offset))

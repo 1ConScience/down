@@ -1,7 +1,7 @@
 from initialisation import *
 
-cube_x_offset = 107
-cube_y_offset = 62
+cube_x_offset = 53
+cube_y_offset = 31
 
 camera = vec(0,0)
 

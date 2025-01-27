@@ -8,14 +8,15 @@ def display_elements():
         character.display()
 
 def generateMap():
-    for i in range(10):
-        cube = Cube("0063",cube_x_offset*i*2,0)
-        addCollideGroup(cube)
-    
-    for i in range(10):
-        cube = Cube("0063",cube_x_offset+cube_x_offset*i*2,cube_y_offset)
-        addCollideGroup(cube)
 
+    for j in range(12):
+        for i in range(10):
+            if j%2==0:
+                cube = Cube("0063",cube_x_offset*i*2,cube_y_offset*j)
+            else : 
+                cube = Cube("0063",cube_x_offset+cube_x_offset*i*2,cube_y_offset*j)
+            addCollideGroup(cube)
+    
 def start():
     emptyGroup()
 
