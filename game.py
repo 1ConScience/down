@@ -1,4 +1,4 @@
-from Classiq import *
+from classiq import *
 
 def display_elements(room,player,list_bot):
     #room
