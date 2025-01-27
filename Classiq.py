@@ -4,14 +4,6 @@ class Character(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  
 
-        self.surf = walk_EAST_Sheet.subsurface((0,0,256,256))
-        self.mask = pygame.mask.from_surface(character_mask)
-        self.rect = self.surf.get_rect()
-   
-        self.pos = vec((WIDTH/2,HEIGHT/2+cube_y_offset))
-        self.vel = vec(0,0)
-        self.last_direction = ""
-
         self.index_frame = 0 #that keeps track on the current index of the image list.
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
         self.animation_frames = 2 #that define how many seconds or frames should pass before switching image.
@@ -20,11 +12,19 @@ class Character(pygame.sprite.Sprite):
 
         self.index_frame_idle = 0 #that keeps track on the current index of the image list.
         self.current_frame_idle = 0 #that keeps track on the current time or current frame since last the index switched.
-        self.animation_frames_idle = 10 #that define how many seconds or frames should pass before switching image.
+        self.animation_frames_idle = 8 #that define how many seconds or frames should pass before switching image.
         self.offset_y_frame_idle = 0
         self.offset_x_frame_idle = 0
-        
-        self.velocity = 4#6
+
+        self.pos = vec((WIDTH/2,HEIGHT/2+cube_y_offset))
+        self.vel = vec(0,0)
+        self.last_direction = "walk_EAST_Sheet"
+
+        self.surf = idle_EAST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        self.mask = pygame.mask.from_surface(character_mask)
+        self.rect = self.surf.get_rect()
+
+        self.velocity = 5#6
 
     def update(self):   
         if self.vel != vec(0,0):
@@ -45,7 +45,7 @@ class Character(pygame.sprite.Sprite):
 
     def display(self):
         self.animate()
-        screen.blit(self.surf, (self.rect.x, self.rect.y))
+        screen.blit(self.surf, (self.rect.x-camera.x, self.rect.y-camera.y))
 
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
@@ -230,7 +230,7 @@ class Cube(pygame.sprite.Sprite):
 
     def display(self):
         self.animate()
-        screen.blit(self.surf, (self.rect.x, self.rect.y))
+        screen.blit(self.surf, (self.rect.x-camera.x, self.rect.y-camera.y))
 
     def animate(self):
         pass

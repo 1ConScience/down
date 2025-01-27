@@ -41,6 +41,9 @@ def start():
 
         player.update()
 
+        camera.x =  player.pos.x - WIDTH/2
+        camera.y =  player.pos.y-128 - HEIGHT/2
+
         for bot in list_bot:
             if frame_count%10==0:
                 bot.move()
