@@ -8,7 +8,7 @@ class Character(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(character_mask)
         self.rect = self.surf.get_rect()
    
-        self.pos = vec((WIDTH/2+200,HEIGHT/2))
+        self.pos = vec((WIDTH/2,HEIGHT/2+cube_y_offset))
         self.vel = vec(0,0)
         self.last_direction = ""
 
@@ -17,6 +17,12 @@ class Character(pygame.sprite.Sprite):
         self.animation_frames = 2 #that define how many seconds or frames should pass before switching image.
         self.offset_y_frame = 0
         self.offset_x_frame = 0
+
+        self.index_frame_idle = 0 #that keeps track on the current index of the image list.
+        self.current_frame_idle = 0 #that keeps track on the current time or current frame since last the index switched.
+        self.animation_frames_idle = 10 #that define how many seconds or frames should pass before switching image.
+        self.offset_y_frame_idle = 0
+        self.offset_x_frame_idle = 0
         
         self.velocity = 4#6
 
@@ -43,8 +49,8 @@ class Character(pygame.sprite.Sprite):
 
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
-            pass
-        elif self.vel.x > 0 and self.vel.y == 0:
+            self.idleAnimation()
+        if self.vel.x > 0 and self.vel.y == 0:
             self.surf = walk_EAST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_EAST_Sheet"
         elif self.vel.x > 0 and self.vel.y < 0:
@@ -82,7 +88,46 @@ class Character(pygame.sprite.Sprite):
             elif self.index_frame == 12 :
                 self.index_frame = 0 
                 self.offset_x_frame = 0 
-                self.offset_y_frame = 0       
+                self.offset_y_frame = 0     
+
+    def idleAnimation(self):
+        if self.last_direction == "walk_EAST_Sheet":
+            self.surf = idle_EAST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_NORTH_EAST_Sheet":
+            self.surf = idle_NORTH_EAST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_NORTH_Sheet":
+            self.surf = idle_NORTH_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_NORTH_WEST_Sheet":
+            self.surf = idle_NORTH_WEST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_WEST_Sheet":
+            self.surf = idle_WEST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_SOUTH_WEST_Sheet":
+            self.surf = idle_SOUTH_WEST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_SOUTH_Sheet":
+            self.surf = idle_SOUTH_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+        elif self.last_direction == "walk_SOUTH_EAST_Sheet":
+            self.surf = idle_SOUTH_EAST_Sheet.subsurface((256*self.offset_x_frame_idle,256*self.offset_y_frame_idle,256,256))
+
+        self.current_frame_idle += 1
+        if self.current_frame_idle >= self.animation_frames_idle:
+            self.current_frame_idle = 0
+            self.index_frame_idle += 1
+
+            self.offset_x_frame_idle += 1
+
+            if self.index_frame_idle == 6 :
+                self.offset_x_frame_idle = 0 
+                self.offset_y_frame_idle = 1  
+            elif self.index_frame_idle == 12 :
+                self.offset_x_frame_idle = 0 
+                self.offset_y_frame_idle = 2  
+            elif self.index_frame_idle == 18 :
+                self.offset_x_frame_idle = 0 
+                self.offset_y_frame_idle = 3  
+            elif self.index_frame_idle == 20 :
+                self.index_frame_idle = 0 
+                self.offset_x_frame_idle = 0 
+                self.offset_y_frame_idle = 0  
 
 class Player(Character):
     def __init__(self):

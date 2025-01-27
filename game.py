@@ -1,44 +1,34 @@
 from classiq import *
 
-def display_elements(list_cube,player,list_bot):
-    for cube in list_cube:
-        cube.display()
+def display_elements():
+    for entity in collide_sprite_group:
+        entity.display()
 
-    player.display()
+    for character in character_sprite_group:
+        character.display()
 
-    for bot in list_bot:
-        bot.display()
+def generateMap():
+    for i in range(10):
+        cube = Cube("0063",cube_x_offset*i*2,0)
+        addCollideGroup(cube)
     
+    for i in range(10):
+        cube = Cube("0063",cube_x_offset+cube_x_offset*i*2,cube_y_offset)
+        addCollideGroup(cube)
+
 def start():
     emptyGroup()
 
     player = Player()
+    addCharacterGroup(player)
 
-    list_cube = []
-
-
-
-    cube3 = Cube("0063",107,-62)
-    addCollideGroup(cube3)
-    list_cube.append(cube3)
-
-    cube1 = Cube("0063")
-    addCollideGroup(cube1)
-    list_cube.append(cube1)
-
-
-    cube4 = Cube("0063",107*2,0)
-    addCollideGroup(cube4)
-    list_cube.append(cube4)
-
-    cube2 = Cube("0063",107,62)
-    addCollideGroup(cube2)
-    list_cube.append(cube2)    
-
+    generateMap()
+    
     list_bot = []
     for i in range(4):
         bot = Bot()
         list_bot.append(bot)
+        addCharacterGroup(bot)
 
     frame_count = 0
 
@@ -58,7 +48,7 @@ def start():
 
         screen.fill((0,0,0))
 
-        display_elements(list_cube,player,list_bot)
+        display_elements()
 
         pygame.display.update()
         FramePerSec.tick(FPS)

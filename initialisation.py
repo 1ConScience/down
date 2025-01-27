@@ -26,7 +26,7 @@ WIDTH = infoObject.current_w
 HEIGHT = infoObject.current_h
 
 
-
+character_mask = pygame.image.load("assets/fox_mask.png").convert_alpha()
 
 walk_EAST_Sheet = pygame.image.load("assets/for_walk/Fox_Walk_dir6.png").convert_alpha()
 walk_NORTH_EAST_Sheet = pygame.image.load("assets/for_walk/Fox_Walk_dir5.png").convert_alpha()
@@ -37,7 +37,14 @@ walk_SOUTH_Sheet = pygame.image.load("assets/for_walk/Fox_Walk_dir8.png").conver
 walk_SOUTH_WEST_Sheet = pygame.image.load("assets/for_walk/Fox_Walk_dir1.png").convert_alpha()
 walk_WEST_Sheet = pygame.image.load("assets/for_walk/Fox_Walk_dir2.png").convert_alpha()
 
-character_mask = pygame.image.load("assets/fox_mask.png").convert_alpha()
+idle_EAST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir6.png").convert_alpha()
+idle_NORTH_EAST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir5.png").convert_alpha()
+idle_NORTH_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir4.png").convert_alpha()
+idle_NORTH_WEST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir3.png").convert_alpha()
+idle_SOUTH_EAST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir7.png").convert_alpha()
+idle_SOUTH_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir8.png").convert_alpha()
+idle_SOUTH_WEST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir1.png").convert_alpha()
+idle_WEST_Sheet = pygame.image.load("assets/fox_idle/Fox_Idle_dir2.png").convert_alpha()
 
 
 
@@ -50,5 +57,3 @@ character_mask = pygame.image.load("assets/fox_mask.png").convert_alpha()
 
 
 
-collide_sprite_group = pygame.sprite.Group()
-enemies_sprite_group = pygame.sprite.Group()

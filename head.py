@@ -1,11 +1,20 @@
 from initialisation import *
 
+cube_x_offset = 107
+cube_y_offset = 62
+
+collide_sprite_group = pygame.sprite.Group()
+character_sprite_group = pygame.sprite.Group()
+
 def emptyGroup():
     collide_sprite_group.empty()
-    enemies_sprite_group.empty()
+    character_sprite_group.empty()
 
-def addCollideGroup(test_room):
-    test_room.add(collide_sprite_group)
+def addCollideGroup(enity):
+    enity.add(collide_sprite_group)
+
+def addCharacterGroup(character):
+    character.add(character_sprite_group)
 
 def areSpritesColliding(sprite1,sprite2):
     if sprite1 and sprite2 :
