@@ -4,19 +4,21 @@ class Character(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()  
 
-        self.surf = character_standing_sheet_surf.subsurface((0,0,100,150))
+        self.surf = walk_EAST_Sheet.subsurface((0,0,256,256))
         self.mask = pygame.mask.from_surface(character_mask)
         self.rect = self.surf.get_rect()
    
-        self.pos = vec((WIDTH/2,HEIGHT/2))
+        self.pos = vec((WIDTH/2+200,HEIGHT/2))
         self.vel = vec(0,0)
         self.last_direction = ""
 
         self.index_frame = 0 #that keeps track on the current index of the image list.
         self.current_frame = 0 #that keeps track on the current time or current frame since last the index switched.
-        self.animation_frames = 3 #that define how many seconds or frames should pass before switching image.
+        self.animation_frames = 2 #that define how many seconds or frames should pass before switching image.
+        self.offset_y_frame = 0
+        self.offset_x_frame = 0
         
-        self.velocity = 6#6
+        self.velocity = 4#6
 
     def update(self):   
         if self.vel != vec(0,0):
@@ -30,8 +32,10 @@ class Character(pygame.sprite.Sprite):
 
         blocks_hit_list = pygame.sprite.spritecollide(self, collide_sprite_group, False, collided = pygame.sprite.collide_mask)
         if blocks_hit_list:
+            pass
+        else :
             self.pos -= direction * self.velocity
-            self.rect.midbottom = self.pos 
+            self.rect.midbottom = self.pos
 
     def display(self):
         self.animate()
@@ -39,53 +43,46 @@ class Character(pygame.sprite.Sprite):
 
     def animate(self):
         if self.vel.x == 0 and self.vel.y == 0:
-            if self.last_direction == "walk_EAST_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*7,0,100,150))
-            elif self.last_direction == "walk_NORTH_EAST_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*6,0,100,150))
-            elif self.last_direction == "walk_NORTH_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*5,0,100,150))
-            elif self.last_direction == "walk_NORTH_WEST_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*4,0,100,150))
-            elif self.last_direction == "walk_WEST_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*3,0,100,150))
-            elif self.last_direction == "walk_SOUTH_WEST_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*2,0,100,150))
-            elif self.last_direction == "walk_SOUTH_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*1,0,100,150))
-            elif self.last_direction == "walk_SOUTH_EAST_Sheet":
-                self.surf = character_standing_sheet_surf.subsurface((100*0,0,100,150))
+            pass
         elif self.vel.x > 0 and self.vel.y == 0:
-            self.surf = walk_EAST_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_EAST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_EAST_Sheet"
         elif self.vel.x > 0 and self.vel.y < 0:
-            self.surf = walk_NORTH_EAST_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_NORTH_EAST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_NORTH_EAST_Sheet"
         elif self.vel.x == 0 and self.vel.y < 0:
-            self.surf = walk_NORTH_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_NORTH_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_NORTH_Sheet"
         elif self.vel.x < 0 and self.vel.y < 0:
-            self.surf = walk_NORTH_WEST_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_NORTH_WEST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_NORTH_WEST_Sheet"
         elif self.vel.x < 0 and self.vel.y == 0:
-            self.surf = walk_WEST_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_WEST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_WEST_Sheet"
         elif self.vel.x < 0 and self.vel.y > 0:
-            self.surf = walk_SOUTH_WEST_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_SOUTH_WEST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_SOUTH_WEST_Sheet"
         elif self.vel.x == 0 and self.vel.y > 0:
-            self.surf = walk_SOUTH_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_SOUTH_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_SOUTH_Sheet"
         elif self.vel.x > 0 and self.vel.y > 0:
-            self.surf = walk_SOUTH_EAST_Sheet.subsurface((100*self.index_frame,0,100,150))
+            self.surf = walk_SOUTH_EAST_Sheet.subsurface((256*self.offset_x_frame,256*self.offset_y_frame,256,256))
             self.last_direction = "walk_SOUTH_EAST_Sheet"
 
         self.current_frame += 1
         if self.current_frame >= self.animation_frames:
             self.current_frame = 0
             self.index_frame += 1
-            if self.index_frame >= 8 :
-                self.index_frame = 0          
+
+            self.offset_x_frame += 1
+
+            if self.index_frame == 6 :
+                self.offset_x_frame = 0 
+                self.offset_y_frame = 1  
+            elif self.index_frame == 12 :
+                self.index_frame = 0 
+                self.offset_x_frame = 0 
+                self.offset_y_frame = 0       
 
 class Player(Character):
     def __init__(self):
@@ -140,8 +137,6 @@ class Player(Character):
 class Bot(Character):
     def __init__(self):
         super().__init__()  
- 
-        self.pos = vec((WIDTH/2,HEIGHT/2))
 
     def move(self):
         magic_number = random.randint(1,9)
@@ -174,17 +169,19 @@ class Bot(Character):
             self.vel.y = 0
 
 class Cube(pygame.sprite.Sprite):
-    def __init__(self, identifiant):
+    def __init__(self, identifiant,x_offset=0,y_offset=0):
         super().__init__()  
 
         self.identifiant = identifiant
 
         self.surf = pygame.image.load("assets/assets_1024x1024/isometric_"+identifiant+".png").convert_alpha()
+        self.surf = pygame.transform.scale(self.surf, (256,256))
 
         tmp_room_mask = pygame.image.load("assets/isometric_mask.png").convert_alpha()
+        tmp_room_mask = pygame.transform.scale(tmp_room_mask, (256,256))
         self.mask = pygame.mask.from_surface(tmp_room_mask)
 
-        self.rect = self.surf.get_rect(center = (WIDTH/2, HEIGHT/2))
+        self.rect = self.surf.get_rect(center = (WIDTH/2+x_offset, HEIGHT/2+y_offset))
 
     def display(self):
         self.animate()

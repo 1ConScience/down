@@ -1,7 +1,8 @@
 from classiq import *
 
-def display_elements(first_cube,player,list_bot):
-    first_cube.display()
+def display_elements(list_cube,player,list_bot):
+    for cube in list_cube:
+        cube.display()
 
     player.display()
 
@@ -13,8 +14,26 @@ def start():
 
     player = Player()
 
-    first_cube = Cube("0060")
-    addCollideGroup(first_cube)
+    list_cube = []
+
+
+
+    cube3 = Cube("0063",107,-62)
+    addCollideGroup(cube3)
+    list_cube.append(cube3)
+
+    cube1 = Cube("0063")
+    addCollideGroup(cube1)
+    list_cube.append(cube1)
+
+
+    cube4 = Cube("0063",107*2,0)
+    addCollideGroup(cube4)
+    list_cube.append(cube4)
+
+    cube2 = Cube("0063",107,62)
+    addCollideGroup(cube2)
+    list_cube.append(cube2)    
 
     list_bot = []
     for i in range(4):
@@ -39,7 +58,7 @@ def start():
 
         screen.fill((0,0,0))
 
-        display_elements(first_cube,player,list_bot)
+        display_elements(list_cube,player,list_bot)
 
         pygame.display.update()
         FramePerSec.tick(FPS)
